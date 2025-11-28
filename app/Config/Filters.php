@@ -12,6 +12,8 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
+use CodeIgniter\Config\BaseConfig;
+
 
 class Filters extends BaseFilters
 {
@@ -92,8 +94,9 @@ class Filters extends BaseFilters
      *
      * @var array<string, list<string>>
      */
-    public array $methods = [];
-
+    public array $methods = [
+        'POST' => ['csrf'],
+    ];
     /**
      * List of filter aliases that should run on any
      * before or after URI patterns.

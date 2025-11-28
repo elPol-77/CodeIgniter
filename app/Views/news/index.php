@@ -1,6 +1,8 @@
 <section>
     <h2><?= esc($title) ?></h2>
-
+    <p><a href="<?= base_url('news/new')?>">
+            Create New
+        </a></p>
     <?php if ($news_list !== []): ?>
 
     <?php foreach ($news_list as $news_item): ?>
@@ -13,6 +15,8 @@
     <p><a href="<?= base_url('news/'.$news_item['slug'])?>">
             View article
         </a></p>
+    <a href="<?= base_url('news/del/'.$news_item['id'])?>">Delete New</a>
+
 
     <?php endforeach ?>
 
