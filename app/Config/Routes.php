@@ -16,6 +16,7 @@ $routes->get('news/new', [News::class, 'new']); // Add this line
 $routes->post('news', [News::class, 'create']); // Add this line
 $routes->get('news/(:segment)', [News::class, 'show']);
 $routes->get('news/del/(:num)',[News::class, 'delete']);
-
+$routes->post('news/update/updated/(:num)',[News::class, 'updatedItem']);
+$routes->get('news/update/(:num)',[News::class, 'update']);
 $routes->get('pages', [Pages::class, 'index']);
 $routes->get('(:segment)', [Pages::class, 'view']);

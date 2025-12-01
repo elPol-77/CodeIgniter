@@ -12,10 +12,12 @@
     <div class="main">
         <?= esc($news_item['body']) ?>
     </div>
+    <h4>Categoría: <?= esc ($news_item['category']) ?></h4>
     <p><a href="<?= base_url('news/'.$news_item['slug'])?>">
             View article
         </a></p>
     <a href="<?= base_url('news/del/'.$news_item['id'])?>">Delete New</a>
+    <a href="<?= base_url('news/update/'.$news_item['id'])?>">Update New</a>
 
 
     <?php endforeach ?>

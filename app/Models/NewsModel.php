@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class NewsModel extends Model
 {
     protected $table = 'news';
-    protected $allowedFields = ['title','slug','body'];
+    protected $allowedFields = ['title','slug','body','id_category'];
     
     /**
      * @param false|string $slug
@@ -17,9 +17,16 @@ class NewsModel extends Model
     public function getNews($slug = false)
     {
         if ($slug === false) {
+            $sql = $this->select('news.*,category.category');
+            $sql = $this->join('category','news.id_category=category.id');
             return $this->findAll();
+            return $sql;
         }
-
-        return $this->where(['slug' => $slug])->first();
+            $sql = $this->select('news.*,category.category');
+            $sql = $this->join('category','news.id_category=category.id');
+            return $this->where(['slug' => $slug]);
+            $sql = $this->first();        
+            return $sql;
+        
     }
 }
