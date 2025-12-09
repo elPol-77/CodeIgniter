@@ -109,10 +109,12 @@ class News extends BaseController
         }
         
         $model = model(NewsModel::class);
+        $categoryModel = model(CategoryModel::class);
         if($model->where('id',$id)->find()){
             $data = [
                 'news' => $model->where('id',$id)->first(),
                 'title' => 'Update item',
+                'category' => $categoryModel->findAll(),
             ];
         } else {
             throw new PageNotFoundException('Selected item does not exist in database');
@@ -123,34 +125,37 @@ class News extends BaseController
             . view('templates/footer');
 }
 
-    public function updatedItem($id)
+// En NewsController.php
+
+public function updatedItem($id)
 {
-        helper('form');
-        $data_form = $this->request->getPost(['title', 'body']);// name form
+    helper('form');
+    
+    $data_form = $this->request->getPost(['title', 'body', 'id_category']);
 
-        // Checks whether the submitted data passed the validation rules.
-        if (! $this->validateData($data_form, [
-            'title' => 'required|max_length[255]|min_length[3]',
-            'body'  => 'required|max_length[5000]|min_length[10]',
-        ])) {
-            // The validation fails, so returns the form.
-            return $this->update($id);
-        }
+    $validationRules = [
+        'title'       => 'required|max_length[255]|min_length[3]',
+        'body'        => 'required|max_length[5000]|min_length[10]',
+        'id_category' => 'required|integer|is_not_unique[category.id]',
+    ];
 
-        // Gets the validated data.
-        $post = $this->validator->getValidated();
+    if (! $this->validateData($data_form, $validationRules)) {
+        return $this->update($id); 
+    }
 
-        $model = model(NewsModel::class);
+    $post = $this->validator->getValidated();
+    $newsModel = model(NewsModel::class);
 
-        $model->save([
-            'id'    => $id,
-            'title' => $post['title'],
-            'slug'  => url_title($post['title'], '-', true),
-            'body'  => $post['body'],
-        ]);
-        $model = model(NewsModel::class);
-        
-        return redirect()->to(base_url('/news'));
- 
+    $newsModel->save([
+        'id'          => $id,
+        'title'       => $post['title'],
+        'slug'        => url_title($post['title'], '-', true),
+        'body'        => $post['body'],
+        'id_category' => $post['id_category'],
+    ]);
+    
+    session()->setFlashdata('message', 'La noticia ha sido actualizada exitosamente.');
+    
+    return redirect()->to(base_url('/news'));
 }
 }

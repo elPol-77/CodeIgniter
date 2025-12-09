@@ -1,5 +1,5 @@
 <section>
-    <a href="<?= base_url('/')?>">Volver a listado de noticias</a>
+    <a href="<?= base_url('/news')?>">Volver a listado de noticias</a>
     <h2><?= esc($title) ?></h2>
 
     <?= session()->getFlashdata('error') ?>
@@ -15,7 +15,16 @@
         <label for="body">Text</label>
         <textarea name="body" cols="45" rows="4"><?= esc($news['body']) ?></textarea>
         <br>
-
+        <label for="category">Category</label>
+        <select name="id_category">
+            <?php if (! empty($category) && is_array($category)): ?>
+            <?php foreach ($category as $category_item) :?>
+            <option value="<?= $category_item["id"] ?>">
+                <?= $category_item["category"] ?>
+            </option>
+            <?php endforeach ?>
+            <?php endif ?>
+        </select>
         <input type="submit" name="submit" value="Update item">
     </form>
     <?php endif; ?>
