@@ -259,6 +259,12 @@
                 <li class="menu-item hidden"><a href="<?= base_url('news') ?>">News</a></li>
                 <li class="menu-item hidden"><a href="<?= base_url('category') ?>">Categorias</a></li>
                 <li class="menu-item hidden"><a href="<?= base_url('admin') ?>">Admin</a></li>
+                <?php
+                    $session = session();
+                    if(!empty($session->get('user'))) :
+                        ?>
+                <li class="menu-item hidden"><a href="session">Cerrar Sesión</a></li>
+                <?php endif ?>
 
                 <li class="menu-item hidden"><a href="https://pablobenlloch.com.es/labutaca" target="__blank">La
                         Butaca</a></li>
