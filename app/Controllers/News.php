@@ -15,7 +15,7 @@ class News extends BaseController
 
         $data = [
             'news_list' => $model->getNews(),
-            'title'     => 'News archive',
+            'title'     => 'News archive', // Siempre tiene que ser title
         ];
 
         return view('templates/header', $data)
@@ -34,7 +34,7 @@ class News extends BaseController
             throw new PageNotFoundException('Cannot find the news item: ' . $slug);
         }
 
-        $data['title'] = $data['news']['title'];
+        $data['title'] = $data['news']['title']; //Siempre tiene que ser title
 
         return view('templates/header', $data)
             . view('news/view',$data)
