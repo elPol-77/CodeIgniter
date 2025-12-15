@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
-use CodeIgniter\Exceptions\PageNotFoundException; // Esta no es estrictamente necesaria aquí, pero la mantengo
+use CodeIgniter\Exceptions\PageNotFoundException; 
 
 class Users extends BaseController
 {
@@ -18,9 +18,9 @@ class Users extends BaseController
         $errorMessage = ($error === null) ? '' : 'Credenciales Incorrectas';
 
         // Corregido typo en 'Acces' a 'Access'
-        return view('templates/header', ['title' => 'Private Access'])
-            . view('users/login', ['error' => $errorMessage])
-            . view('templates/footer');
+        return view('backend/templates/header', ['title' => 'Private Access'])
+            . view('backend/users/login', ['error' => $errorMessage])
+            . view('backend/templates/footer');
     }
 
     /**
@@ -65,9 +65,9 @@ class Users extends BaseController
             // Pasar los datos del usuario a la vista de administración
             $data['user'] = $user; 
             
-            return view('templates/header', ['title' => 'Admin'])
-                . view('users/admin', $data)
-                . view('templates/footer');
+            return view('backend/templates/header', ['title' => 'Admin'])
+                . view('backend/users/admin', $data)
+                . view('backend/templates/footer');
         } else {
             // Autenticación fallida, volver al formulario con mensaje de error
             return $this->loginForm("Error");

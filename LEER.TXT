@@ -1,0 +1,10 @@
+Cambiar app/Config/App.php 
+Cambiar $baseURL 
+
+y el $indexPage dejarlo en '';
+
+Luego el env descomentar la linea CI_ENVIRONMENT y poner = development
+Luego en app.baseURL poner la misma que tienes 
+el env cambiarlo a .env 
+
+Conexión con la bbdd en app/Config/Database 

@@ -15,12 +15,12 @@ class News extends BaseController
 
         $data = [
             'news_list' => $model->getNews(),
-            'title'     => 'News archive',
+            'title'     => 'News archive', // Siempre tiene que ser title
         ];
 
-        return view('templates/header', $data)
-            . view('news/index')
-            . view('templates/footer');
+        return view('backend/templates/header', $data)
+            . view('backend/news/index')
+            . view('backend/templates/footer');
     }
 
 
@@ -34,20 +34,20 @@ class News extends BaseController
             throw new PageNotFoundException('Cannot find the news item: ' . $slug);
         }
 
-        $data['title'] = $data['news']['title'];
+        $data['title'] = $data['news']['title']; //Siempre tiene que ser title
 
-        return view('templates/header', $data)
-            . view('news/view',$data)
-            . view('templates/footer');
+        return view('backend/templates/header', $data)
+            . view('backend/news/view',$data)
+            . view('backend/templates/footer');
     }
     public function new()
     {
         helper('form');
         $model_cat = model (CategoryModel::class);
         if($data['category'] = $model_cat->findAll()){
-        return view('templates/header', ['title' => 'Create a news item'])
-            . view('news/create',$data)
-            . view('templates/footer');
+        return view('backend/templates/header', ['title' => 'Create a news item'])
+            . view('backend/news/create',$data)
+            . view('backend/templates/footer');
         }
     }
     public function create()
@@ -60,7 +60,8 @@ class News extends BaseController
         if (! $this->validateData($data, [
             'title' => 'required|max_length[255]|min_length[3]',
             'body'  => 'required|max_length[5000]|min_length[10]',
-            'id_category' => 'required'
+            'id_category' => 'required',
+            'img' => 'required'
         ])) {
             // The validation fails, so returns the form.
             return $this->new();
@@ -76,6 +77,7 @@ class News extends BaseController
             'slug'  => url_title($post['title'], '-', true),
             'body'  => $post['body'],
             'id_category' => $post['id_category'],
+            'img' => $post['img'],
         ]);
 
         // return view('templates/header', ['title' => 'Create a news item'])
@@ -120,9 +122,9 @@ class News extends BaseController
             throw new PageNotFoundException('Selected item does not exist in database');
         }
 
-        return view('templates/header' , $data)
-            . view('news/update')
-            . view('templates/footer');
+        return view('backend/templates/header' , $data)
+            . view('backend/news/update')
+            . view('backend/templates/footer');
 }
 
 // En NewsController.php
@@ -137,6 +139,7 @@ public function updatedItem($id)
         'title'       => 'required|max_length[255]|min_length[3]',
         'body'        => 'required|max_length[5000]|min_length[10]',
         'id_category' => 'required|integer|is_not_unique[category.id]',
+        'img'         => 'required|max_length[5000]|ming_length[10]',
     ];
 
     if (! $this->validateData($data_form, $validationRules)) {
@@ -152,6 +155,7 @@ public function updatedItem($id)
         'slug'        => url_title($post['title'], '-', true),
         'body'        => $post['body'],
         'id_category' => $post['id_category'],
+        'img'         => $post['img'],
     ]);
     
     session()->setFlashdata('message', 'La noticia ha sido actualizada exitosamente.');

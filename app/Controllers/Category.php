@@ -20,9 +20,9 @@ class Category extends BaseController
             'title'         => 'Category Management',
         ];
 
-        return view('templates/header', $data)
-            . view('category/index')
-            . view('templates/footer');
+        return view('backend/templates/header', $data)
+            . view('backend/category/index')
+            . view('backend/templates/footer');
     }
 
     // -----------------------------------------------------------
@@ -34,9 +34,9 @@ class Category extends BaseController
         
         $data['title'] = 'Create New Category';
 
-        return view('templates/header', $data)
-            . view('category/create')
-            . view('templates/footer');
+        return view('backend/templates/header', $data)
+            . view('backend/category/create')
+            . view('backend/templates/footer');
     }
 
     // -----------------------------------------------------------
@@ -134,9 +134,9 @@ class Category extends BaseController
             'title'    => 'Update Category: ' . esc($categoryItem['category']),
         ];
 
-        return view('templates/header', $data)
-            . view('category/update')
-            . view('templates/footer');
+        return view('backend/templates/header', $data)
+            . view('backend/category/update')
+            . view('backend/templates/footer');
     }
 
     // -----------------------------------------------------------
