@@ -9,7 +9,7 @@ use App\Models\CategoryModel;
 
 class News extends BaseController
 {
-    public function index()
+    public function index($layer = null)
     {
         $model = model(NewsModel::class);
 
@@ -17,10 +17,15 @@ class News extends BaseController
             'news_list' => $model->getNews(),
             'title'     => 'News archive', // Siempre tiene que ser title
         ];
-
+        if($layer == null) :
+        return view('frontend/templates/header', $data)
+            . view('frontend/news/index')
+            . view('frontend/templates/footer');
+        else : 
         return view('backend/templates/header', $data)
             . view('backend/news/index')
             . view('backend/templates/footer');
+        endif;
     }
 
 
@@ -83,7 +88,7 @@ class News extends BaseController
         // return view('templates/header', ['title' => 'Create a news item'])
         //     . view('news/success')
         //     . view('templates/footer');
-            return redirect()->to(base_url('news'));
+            return redirect()->to(base_url('/news'));
 
     }
     public function delete($id)
@@ -99,7 +104,7 @@ class News extends BaseController
         throw new PageNotFoundException('Selected item does not exist in database');
     }
 
-            return redirect()->to(base_url('news'));
+            return redirect()->to(base_url('/news'));
 }
 
     public function update($id)
@@ -127,39 +132,38 @@ class News extends BaseController
             . view('backend/templates/footer');
 }
 
-// En NewsController.php
 
-public function updatedItem($id)
-{
-    helper('form');
-    
-    $data_form = $this->request->getPost(['title', 'body', 'id_category']);
+    public function updatedItem($id)
+    {
+        helper('form');
+        
+        $data_form = $this->request->getPost(['title', 'body', 'id_category']);
 
-    $validationRules = [
-        'title'       => 'required|max_length[255]|min_length[3]',
-        'body'        => 'required|max_length[5000]|min_length[10]',
-        'id_category' => 'required|integer|is_not_unique[category.id]',
-        'img'         => 'required|max_length[5000]|ming_length[10]',
-    ];
+        $validationRules = [
+            'title'       => 'required|max_length[255]|min_length[3]',
+            'body'        => 'required|max_length[5000]|min_length[10]',
+            'id_category' => 'required|integer|is_not_unique[category.id]',
+            // 'img'         => 'required|max_length[5000]|ming_length[10]',
+        ];
 
-    if (! $this->validateData($data_form, $validationRules)) {
-        return $this->update($id); 
+        if (! $this->validateData($data_form, $validationRules)) {
+            return $this->update($id); 
+        }
+
+        $post = $this->validator->getValidated();
+        $newsModel = model(NewsModel::class);
+
+        $newsModel->save([
+            'id'          => $id,
+            'title'       => $post['title'],
+            'slug'        => url_title($post['title'], '-', true),
+            'body'        => $post['body'],
+            'id_category' => $post['id_category'],
+            // 'img'         => $post['img'],
+        ]);
+        
+        session()->setFlashdata('message', 'La noticia ha sido actualizada exitosamente.');
+        
+        return redirect()->to(base_url('backend/'));
     }
-
-    $post = $this->validator->getValidated();
-    $newsModel = model(NewsModel::class);
-
-    $newsModel->save([
-        'id'          => $id,
-        'title'       => $post['title'],
-        'slug'        => url_title($post['title'], '-', true),
-        'body'        => $post['body'],
-        'id_category' => $post['id_category'],
-        'img'         => $post['img'],
-    ]);
-    
-    session()->setFlashdata('message', 'La noticia ha sido actualizada exitosamente.');
-    
-    return redirect()->to(base_url('/news'));
-}
 }

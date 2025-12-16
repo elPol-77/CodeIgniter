@@ -44,7 +44,7 @@
 
     <?php if (!empty($news) && is_array($news)) : ?>
     
-    <form method="post" action="<?= base_url('backend/news/update/updated/' .$news['id']) ?>" class="row g-3">
+    <form method="post" action="<?= base_url('news/update/updated/' .$news['id']) ?>" class="row g-3">
         <?= csrf_field() ?>
 
         <div class="col-md-6">

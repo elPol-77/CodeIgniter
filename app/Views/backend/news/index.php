@@ -523,11 +523,11 @@
                   <td><?= esc($news_item['title']) ?></td>
                   <td><?= esc($news_item['body']) ?></td>
                   <td><?= esc ($news_item['category']) ?></td>
-                  <td><a href="<?= base_url('news/'.$news_item['slug'])?>" class="btn btn-outline-info">
+                  <td><a href="<?= base_url('backend/news/'.$news_item['slug'])?>" class="btn btn-outline-info">
                     View 
                 </a></td>
-                  <td><a href="<?= base_url('news/update/'.$news_item['id'])?>" class="btn btn-outline-warning">Update New</a></td>
-                  <td><a href="<?= base_url('news/del/'.$news_item['id'])?>" class="btn btn-outline-danger">Delete New</a></td>
+                  <td><a href="<?= base_url('backend/news/update/'.$news_item['id'])?>" class="btn btn-outline-warning">Update New</a></td>
+                  <td><a href="<?= base_url('backend/news/del/'.$news_item['id'])?>" class="btn btn-outline-danger">Delete New</a></td>
                   
 
                 </tr>
