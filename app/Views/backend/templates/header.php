@@ -256,9 +256,9 @@
                 <li class="menu-toggle">
                     <button id="menuToggle">&#9776;</button>
                 </li>
-                <li class="menu-item hidden"><a href="<?= base_url('news') ?>">News</a></li>
-                <li class="menu-item hidden"><a href="<?= base_url('category') ?>">Categorias</a></li>
-                <li class="menu-item hidden"><a href="<?= base_url('admin') ?>">Admin</a></li>
+                <li class="menu-item hidden"><a href="<?= base_url('backend/news') ?>">News</a></li>
+                <li class="menu-item hidden"><a href="<?= base_url('backend/category') ?>">Categorias</a></li>
+                <li class="menu-item hidden"><a href="<?= base_url('backend/admin') ?>">Admin</a></li>
                 <?php
                     $session = session();
                     if(!empty($session->get('user'))) :
